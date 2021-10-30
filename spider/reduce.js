@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient
 
-MongoClient.connect('mongodb://localhost:27017/admin', {useNewUrlParser: true}, (err, mconn) => {
+MongoClient.connect('mongodb://10.1.1.121:27017/admin', {useNewUrlParser: true}, (err, mconn) => {
     if(err) {
         console.error(err)
         process.exit(1)

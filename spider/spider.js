@@ -10,7 +10,7 @@ const MAX_HASH_BUFFER = 1000000
 
 let torrentdb = null
 let nextTorrentId = 0
-MongoClient.connect('mongodb://localhost:27017/admin', {useNewUrlParser: true}, (err, mconn) => {
+MongoClient.connect('mongodb://10.1.1.121:27017/admin', {useNewUrlParser: true}, (err, mconn) => {
     if(err) {
         console.error(err)
         process.exit(1)

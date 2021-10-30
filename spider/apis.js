@@ -189,14 +189,14 @@ app.use(cookie.default())
 app.use(bodyParser())
 
 async function startServer() {
-    const client = await MongoClient.connect('mongodb://localhost:27017/admin', {useNewUrlParser: true})
+    const client = await MongoClient.connect('mongodb://10.1.1.121:27017/admin', {useNewUrlParser: true})
     app.context.torrentdb = client.db('torrent')
     app.context.mdb = await mysql.createPool({
         connectionLimit: 5,
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        port: 9306,
+        host: '10.1.1.121',
+        user: 'scott',
+        password: 'tiger',
+        port: 3306,
         multipleStatements: true
     })
     app.listen(process.env.PORT || 3000, async () => {
