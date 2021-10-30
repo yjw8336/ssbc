@@ -50,7 +50,7 @@ router.get('/apis/related', async (ctx) => {
     try{
         const sql = 'SELECT id FROM hash WHERE MATCH(?) LIMIT 0,? OPTION max_matches=1000, max_query_time=50'
 
-        const results = await ctx.mdb.query(sql, [words, 1*(query.count||10)])
+        const results = await ctx.torrentdb.query(sql, [words, 1*(query.count||10)])
         const ids = results.map((x) => x.id)
         ctx.body = {
             code: 0,
@@ -94,7 +94,7 @@ router.get('/apis/search', async (ctx) => {
     sql += ' LIMIT ?,? OPTION max_matches=1000, max_query_time=500'
     sql += '; SHOW META'
 
-    const results = await ctx.mdb.query(sql, values)
+    const results = await ctx.torrentdb.query(sql, values)
     const meta = {}
     for(const v of results[1]) {
         meta[v['Variable_name']] = v['Value']
@@ -191,14 +191,14 @@ app.use(bodyParser())
 async function startServer() {
     const client = await MongoClient.connect('mongodb://10.1.1.121:27017/admin', {useNewUrlParser: true})
     app.context.torrentdb = client.db('torrent')
-    app.context.mdb = await mysql.createPool({
-        connectionLimit: 5,
-        host: '10.1.1.121',
-        user: 'scott',
-        password: 'tiger',
-        port: 3306,
-        multipleStatements: true
-    })
+    // app.context.mdb = await mysql.createPool({
+    //     connectionLimit: 5,
+    //     host: '10.1.1.121',
+    //     user: 'scott',
+    //     password: 'tiger',
+    //     port: 3306,
+    //     multipleStatements: true
+    // })
     app.listen(process.env.PORT || 3000, async () => {
         console.log(new Date(), 'Server is istening...')
         if(process.send) {
